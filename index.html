@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JustStreamIt</title>
+  </head>
+
+  <body>
+    <header>
+      <img src="images/Group 1.png" alt="JustStreamIt Vidéos à la demande" />
+    </header>
+
+    <!-- Meilleur film -->
+
+    <h1>Meilleur film</h1>
+    <div class="film-en-vedette">
+      <img
+        src="placeholder.jpg"
+        alt="Affiche du meilleur film"
+        id="image-meilleur-film"
+      />
+      <div class="infos-film">
+        <h2 id="titre-meilleur-film">Titre du film</h2>
+        <p id="resume-meilleur-film">Résumé du film...</p>
+        <button id="bouton-details-meilleur-film">Détails</button>
+      </div>
+    </div>
+
+    <!-- films les mieux notés -->
+    <h1>Film les mieux notés</h1>
+    <div class="liste-films" id="liste-mieux-notes"></div>
+    <h2 id="titre-meilleur-film">Titre du film</h2>
+    <button class="bouton-details">Détails</button>
+
+    <!--Catégorie Comédies-->
+    <h1>Comédies</h1>
+    <div class="liste-films" id="Catégorie Comédies"></div>
+    <h2 id="titre-meilleur-film">Titre du film</h2>
+    <button class="bouton-details">Détails</button>
+
+    <!--Catégorie Fantasy-->
+    <h1>Fantasy</h1>
+    <div class="liste-films" id="Catégorie Fantasy"></div>
+    <h2 id="titre-meilleur-film">Titre du film</h2>
+    <button class="bouton-details">Détails</button>
+
+    <!-- Autres catégories -->
+    <h1>Autres catégories</h1>
+    <label for="select-categorie">Choisissez une catégorie :</label>
+    <select id="select-categorie">
+      <option value="">-- Sélectionnez --</option>
+      <!-- Options ajoutées dynamiquement -->
+    </select>
+    <div class="liste-films" id="liste-autres-categories">
+      <!-- Films ajoutés dynamiquement -->
+    </div>
+    <button class="voir-plus">Voir plus</button>
+
+    <!--  Modale de détail d'un film-->
+    <div id="modale" class="modale cachee">
+      <div class="contenu-modale">
+        <span class="fermer-modale">&times;</span>
+        <img id="modale-image" src="" alt="" />
+        <h3 id="modale-titre"></h3>
+        <p><strong>Genres :</strong> <span id="modale-genres"></span></p>
+        <p><strong>Date de sortie :</strong> <span id="modale-date"></span></p>
+        <p>
+          <strong>Classification :</strong> <span id="modale-classement"></span>
+        </p>
+        <p><strong>Score IMDB :</strong> <span id="modale-score"></span></p>
+        <p>
+          <strong>Réalisateur :</strong> <span id="modale-realisateur"></span>
+        </p>
+        <p><strong>Acteurs :</strong> <span id="modale-acteurs"></span></p>
+        <p><strong>Durée :</strong> <span id="modale-duree"></span></p>
+        <p><strong>Pays :</strong> <span id="modale-pays"></span></p>
+        <p><strong>Box-office :</strong> <span id="modale-boxoffice"></span></p>
+        <p id="modale-description"></p>
+      </div>
+    </div>
+  </body>
+</html>
