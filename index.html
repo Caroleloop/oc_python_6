@@ -1,19 +1,25 @@
 <!DOCTYPE html>
 <html lang="fr">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Oswald&display=swap"
+    rel="stylesheet"
+  />
+
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>JustStreamIt</title>
+    <link href="style.css" rel="stylesheet" />
   </head>
 
   <body>
-    <header>
-      <img src="images/Group 1.png" alt="JustStreamIt Vidéos à la demande" />
+    <header class="bandeau">
+      <img src="images/image1 1.png" alt="Logo du site" class="logo-bandeau" />
+      <h1>Vidéo à la demande</h1>
     </header>
 
     <!-- Meilleur film -->
-
-    <h1>Meilleur film</h1>
+    <h2>Meilleur film</h2>
     <div class="film-en-vedette">
       <img
         src="placeholder.jpg"
@@ -21,32 +27,59 @@
         id="image-meilleur-film"
       />
       <div class="infos-film">
-        <h2 id="titre-meilleur-film">Titre du film</h2>
-        <p id="resume-meilleur-film">Résumé du film...</p>
-        <button id="bouton-details-meilleur-film">Détails</button>
+        <h2 class="titre-film">Titre du film</h2>
+        <p id="resume-meilleur-film">
+          Jeff "The Dude" Lebowski, mistaken for a millionaire of the same name,
+          seeks restitution for his ruined rug and enlists his bowling buddies
+          to help get it.
+        </p>
+        <button
+          class="bouton-details-meilleur-film"
+          aria-label="Voir les détails de Film"
+        >
+          Détails
+        </button>
       </div>
     </div>
 
     <!-- films les mieux notés -->
-    <h1>Film les mieux notés</h1>
-    <div class="liste-films" id="liste-mieux-notes"></div>
-    <h2 id="titre-meilleur-film">Titre du film</h2>
-    <button class="bouton-details">Détails</button>
+    <h2>Film les mieux notés</h2>
+    <div class="liste-films" id="films-mieux-notes">
+      <div class="film">
+        <img src="film1.jpg" alt="Affiche de Film 1" />
+        <h2 class="titre-film">Film 1</h2>
+        <button class="bouton-details" aria-label="Voir les détails de Film 1">
+          Détails
+        </button>
+      </div>
+    </div>
 
     <!--Catégorie Comédies-->
-    <h1>Comédies</h1>
-    <div class="liste-films" id="Catégorie Comédies"></div>
-    <h2 id="titre-meilleur-film">Titre du film</h2>
-    <button class="bouton-details">Détails</button>
+    <h2>Comédies</h2>
+    <div class="liste-films" id="categorie-comedies">
+      <div class="film">
+        <img src="film1.jpg" alt="Affiche de Film 1" />
+        <h2 class="titre-film">Film 1</h2>
+        <button class="bouton-details" aria-label="Voir les détails de Film 1">
+          Détails
+        </button>
+      </div>
+    </div>
 
     <!--Catégorie Fantasy-->
-    <h1>Fantasy</h1>
-    <div class="liste-films" id="Catégorie Fantasy"></div>
-    <h2 id="titre-meilleur-film">Titre du film</h2>
-    <button class="bouton-details">Détails</button>
+    <h2>Fantasy</h2>
+    <div class="liste-films" id="categorie-fantasy">
+      <div class="film">
+        <img src="film1.jpg" alt="Affiche de Film 1" />
+        <h2 class="titre-film">Film 1</h2>
+        <button class="bouton-details" aria-label="Voir les détails de Film 1">
+          Détails
+        </button>
+      </div>
+    </div>
 
     <!-- Autres catégories -->
-    <h1>Autres catégories</h1>
+    <h2>Autres catégories</h2>
     <label for="select-categorie">Choisissez une catégorie :</label>
     <select id="select-categorie">
       <option value="">-- Sélectionnez --</option>
@@ -55,7 +88,7 @@
     <div class="liste-films" id="liste-autres-categories">
       <!-- Films ajoutés dynamiquement -->
     </div>
-    <button class="voir-plus">Voir plus</button>
+    <button class="voir-plus" aria-label="Voir plus de films">Voir plus</button>
 
     <!--  Modale de détail d'un film-->
     <div id="modale" class="modale cachee">

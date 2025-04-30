@@ -1,0 +1,48 @@
+/* style.css */
+
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Police générale */
+body {
+  font-family: "Oswald", sans-serif;
+  background-color: #ffffff;
+  color: #000000;
+  padding: 20px;
+}
+
+/* Titres */
+h2 {
+  font-size: 48px;
+  margin: 20px 0 10px 0;
+}
+
+.bandeau {
+  display: flex;
+  align-items: center;
+  background-color: #61787f;
+  padding: 15px 30px;
+}
+
+.logo-bandeau {
+  height: 50px;
+  margin-right: 20px;
+  width: 127;
+  height: 94;
+  top: -363px;
+  left: -1355px;
+}
+
+.bandeau h1 {
+  color: #ffffff;
+  font-family: "Oswald", sans-serif;
+  font-weight: 300;
+  font-size: 40px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  vertical-align: middle;
+}
