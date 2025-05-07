@@ -1,18 +1,37 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const apiUrl = "http://localhost:8000/api/v1/";
-  const apiUrlscore = apiUrl + "titles/?sort_by=-imdb_score";
+  const apiUrl = "http://localhost:8000/api/v1/titles/?sort_by=-imdb_score";
 
-  fetch(apiUrlscore)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Erreur HTTP : " + response.status);
+  async function recupererTousLesFilms(url) {
+    let tousLesFilms = [];
+
+    while (url) {
+      try {
+        const reponse = await fetch(url);
+        const data = await reponse.json();
+
+        // Ajoute les résultats de cette page
+        tousLesFilms = tousLesFilms.concat(data.results);
+
+        // Passe à l'URL suivante (ou null s'il n'y en a plus)
+        url = data.next;
+      } catch (erreur) {
+        console.error("Erreur lors de la récupération des films :", erreur);
+        break;
       }
-      return response.json();
-    })
-    .then((data) => {
-      data.results.sort((a, b) => b.imdb_score - a.imdb_score);
-      const meilleurFilm = data.results[0];
+    }
 
+    return tousLesFilms;
+  }
+
+  recupererTousLesFilms(apiUrl)
+    .then((films) => {
+      console.log("Nombre total de films récupérés :", films.length);
+      console.log("Films :", films);
+
+      films.sort((a, b) => b.imdb_score - a.imdb_score);
+
+      //Film le mieux noté
+      const meilleurFilm = films[0];
       document.getElementById("image-meilleur-film").src =
         meilleurFilm.image_url;
       document.querySelector(".titre-film").textContent = meilleurFilm.title;
@@ -29,11 +48,42 @@ document.addEventListener("DOMContentLoaded", () => {
         .addEventListener("click", () => {
           ouvrirModale(meilleurFilm);
         });
+
+      //Films les mieux notés
+      const filmsMieuxNotes = films.slice(1, 9);
+      const ul = document.getElementById("films-mieux-notes");
+      ul.innerHTML = ""; // Nettoyer d'abord
+
+      filmsMieuxNotes.forEach((film) => {
+        const li = document.createElement("li");
+        li.classList.add("film");
+
+        const img = document.createElement("img");
+        img.src = film.image_url;
+        img.alt = `Affiche de ${film.title}`;
+
+        const titre = document.createElement("h3");
+        titre.classList.add("titre-film");
+        titre.textContent = film.title;
+
+        const bouton = document.createElement("button");
+        bouton.classList.add("bouton-details");
+        bouton.setAttribute("aria-label", `Voir les détails de ${film.title}`);
+        bouton.textContent = "Détails";
+        bouton.addEventListener("click", () => ouvrirModale(film));
+
+        li.appendChild(img);
+        li.appendChild(titre);
+        li.appendChild(bouton);
+        ul.appendChild(li);
+      });
     })
+
     .catch((error) => {
       console.error("Une erreur est survenue :", error);
     });
 
+  //Modale
   function ouvrirModale(film) {
     fetch(film.url)
       .then((res) => res.json())
