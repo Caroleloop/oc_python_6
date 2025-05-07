@@ -1,34 +1,33 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const apiUrl = "http://localhost:8000/api/v1/titles/?sort_by=-imdb_score";
+async function recupererTousLesFilms(url) {
+  let tousLesFilms = [];
 
-  async function recupererTousLesFilms(url) {
-    let tousLesFilms = [];
+  while (tousLesFilms.length <= 11) {
+    try {
+      const reponse = await fetch(url);
+      const data = await reponse.json();
 
-    while (url) {
-      try {
-        const reponse = await fetch(url);
-        const data = await reponse.json();
+      // Ajoute les résultats de cette page
+      tousLesFilms = tousLesFilms.concat(data.results);
 
-        // Ajoute les résultats de cette page
-        tousLesFilms = tousLesFilms.concat(data.results);
-
-        // Passe à l'URL suivante (ou null s'il n'y en a plus)
-        url = data.next;
-      } catch (erreur) {
-        console.error("Erreur lors de la récupération des films :", erreur);
-        break;
-      }
+      // Passe à l'URL suivante (ou null s'il n'y en a plus)
+      url = data.next;
+    } catch (erreur) {
+      console.error("Erreur lors de la récupération des films :", erreur);
+      break;
     }
-
-    return tousLesFilms;
   }
 
-  recupererTousLesFilms(apiUrl)
+  return tousLesFilms;
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const allMoviesUrl =
+    "http://localhost:8000/api/v1/titles/?sort_by=-imdb_score";
+
+  recupererTousLesFilms(allMoviesUrl)
     .then((films) => {
       console.log("Nombre total de films récupérés :", films.length);
       console.log("Films :", films);
-
-      films.sort((a, b) => b.imdb_score - a.imdb_score);
 
       //Film le mieux noté
       const meilleurFilm = films[0];
