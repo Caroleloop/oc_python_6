@@ -20,69 +20,83 @@ async function recupererTousLesFilms(url) {
   return tousLesFilms;
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+function afficherFilmsDansListe(films, elementId) {
+  const ul = document.getElementById(elementId);
+  if (!ul) {
+    console.error(`Élément avec l'ID "${elementId}" introuvable.`);
+    return;
+  }
+
+  ul.innerHTML = "";
+
+  films.forEach((film) => {
+    const li = document.createElement("li");
+    li.classList.add("film");
+
+    const img = document.createElement("img");
+    img.src = film.image_url;
+    img.alt = `Affiche de ${film.title}`;
+
+    const titre = document.createElement("h3");
+    titre.classList.add("titre-film");
+    titre.textContent = film.title;
+
+    const bouton = document.createElement("button");
+    bouton.classList.add("bouton-details");
+    bouton.setAttribute("aria-label", `Voir les détails de ${film.title}`);
+    bouton.textContent = "Détails";
+    bouton.addEventListener("click", () => ouvrirModale(film));
+
+    li.appendChild(img);
+    li.appendChild(titre);
+    li.appendChild(bouton);
+    ul.appendChild(li);
+  });
+}
+
+////
+document.addEventListener("DOMContentLoaded", async () => {
   const allMoviesUrl =
     "http://localhost:8000/api/v1/titles/?sort_by=-imdb_score";
+  const comedyUrl =
+    "http://localhost:8000/api/v1/titles/?genre=Comedy&sort_by=-imdb_score";
+  const fantasyUrl =
+    "http://localhost:8000/api/v1/titles/?genre=Fantasy&sort_by=-imdb_score";
 
-  recupererTousLesFilms(allMoviesUrl)
-    .then((films) => {
-      console.log("Nombre total de films récupérés :", films.length);
-      console.log("Films :", films);
+  try {
+    // Récupère tous les films
+    const films = await recupererTousLesFilms(allMoviesUrl);
 
-      //Film le mieux noté
-      const meilleurFilm = films[0];
-      document.getElementById("image-meilleur-film").src =
-        meilleurFilm.image_url;
-      document.querySelector(".titre-film").textContent = meilleurFilm.title;
+    // Meilleur film
+    const meilleurFilm = films[0];
+    document.getElementById("image-meilleur-film").src = meilleurFilm.image_url;
+    document.querySelector(".titre-film").textContent = meilleurFilm.title;
 
-      fetch(meilleurFilm.url)
-        .then((res) => res.json())
-        .then((details) => {
-          document.getElementById("resume-meilleur-film").textContent =
-            details.description;
-        });
+    // Récupérer les détails du meilleur film
+    const details = await fetch(meilleurFilm.url).then((res) => res.json());
+    document.getElementById("resume-meilleur-film").textContent =
+      details.description;
 
-      document
-        .querySelector(".bouton-details-meilleur-film")
-        .addEventListener("click", () => {
-          ouvrirModale(meilleurFilm);
-        });
+    // Films les mieux notés
+    afficherFilmsDansListe(films.slice(1, 7), "films-mieux-notes");
 
-      //Films les mieux notés
-      const filmsMieuxNotes = films.slice(1, 9);
-      const ul = document.getElementById("films-mieux-notes");
-      ul.innerHTML = ""; // Nettoyer d'abord
+    // Récupérer les films de comédie
+    const filmsComedies = await recupererTousLesFilms(comedyUrl);
+    afficherFilmsDansListe(filmsComedies.slice(0, 6), "categorie-comedies");
 
-      filmsMieuxNotes.forEach((film) => {
-        const li = document.createElement("li");
-        li.classList.add("film");
+    // Récupérer les films de fantasy
+    const filmsFantasy = await recupererTousLesFilms(fantasyUrl);
+    afficherFilmsDansListe(filmsFantasy.slice(0, 6), "categorie-fantasy");
 
-        const img = document.createElement("img");
-        img.src = film.image_url;
-        img.alt = `Affiche de ${film.title}`;
+    // Bouton pour ouvrir la modale
+    document
+      .querySelector(".bouton-details-meilleur-film")
+      .addEventListener("click", () => ouvrirModale(meilleurFilm));
+  } catch (error) {
+    console.error("Une erreur est survenue :", error);
+  }
 
-        const titre = document.createElement("h3");
-        titre.classList.add("titre-film");
-        titre.textContent = film.title;
-
-        const bouton = document.createElement("button");
-        bouton.classList.add("bouton-details");
-        bouton.setAttribute("aria-label", `Voir les détails de ${film.title}`);
-        bouton.textContent = "Détails";
-        bouton.addEventListener("click", () => ouvrirModale(film));
-
-        li.appendChild(img);
-        li.appendChild(titre);
-        li.appendChild(bouton);
-        ul.appendChild(li);
-      });
-    })
-
-    .catch((error) => {
-      console.error("Une erreur est survenue :", error);
-    });
-
-  //Modale
+  //Fonction pour ouvrir la modale
   function ouvrirModale(film) {
     fetch(film.url)
       .then((res) => res.json())
@@ -108,10 +122,11 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("modale-description").textContent =
           details.description;
 
+        // Affiche la modale
         document.getElementById("modale").classList.remove("modale-cachee");
       });
   }
-
+  // Fermeture de la modale
   document.querySelector(".fermer-modale").addEventListener("click", () => {
     document.getElementById("modale").classList.add("modale-cachee");
   });
