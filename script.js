@@ -37,6 +37,11 @@ function afficherFilmsDansListe(films, elementId) {
     img.src = film.image_url;
     img.alt = `Affiche de ${film.title}`;
 
+    // Ajoute une image par défaut si l'image est introuvable
+    img.onerror = function () {
+      img.src = "images/image1 1.png"; // Remplace par le chemin de ton image de secours
+    };
+
     const titre = document.createElement("h3");
     titre.classList.add("titre-film");
     titre.textContent = film.title;
