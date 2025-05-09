@@ -20,6 +20,41 @@ async function recupererTousLesFilms(url) {
   return tousLesFilms;
 }
 
+// Fonction pour récupérer tous les genres paginés
+async function recupererTousLesGenres(url) {
+  let tousLesGenres = [];
+
+  while (url) {
+    try {
+      const reponse = await fetch(url);
+      const data = await reponse.json();
+
+      tousLesGenres = tousLesGenres.concat(data.results);
+      url = data.next; // Prochaine page
+    } catch (erreur) {
+      console.error("Erreur lors de la récupération des genres :", erreur);
+      break;
+    }
+  }
+
+  return tousLesGenres;
+}
+
+// Remplit dynamiquement le menu déroulant avec les genres
+async function remplirSelectGenres() {
+  const genres = await recupererTousLesGenres(
+    "http://localhost:8000/api/v1/genres/"
+  );
+  const selectCategorie = document.getElementById("select-categorie");
+
+  genres.forEach((genre) => {
+    const option = document.createElement("option");
+    option.value = genre.name;
+    option.textContent = genre.name;
+    selectCategorie.appendChild(option);
+  });
+}
+
 function afficherFilmsDansListe(films, elementId) {
   const ul = document.getElementById(elementId);
   if (!ul) {
@@ -92,6 +127,24 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Récupérer les films de fantasy
     const filmsFantasy = await recupererTousLesFilms(fantasyUrl);
     afficherFilmsDansListe(filmsFantasy.slice(0, 6), "categorie-fantasy");
+
+    // Remplit le select avec les catégories
+    await remplirSelectGenres();
+    const selectCategorie = document.getElementById("select-categorie");
+
+    // Lorsqu'une catégorie est sélectionnée
+    selectCategorie.addEventListener("change", async (event) => {
+      const categorieChoisie = event.target.value;
+      if (!categorieChoisie) return;
+
+      const url = `http://localhost:8000/api/v1/titles/?genre=${categorieChoisie}&sort_by=-imdb_score`;
+      const filmsCategorie = await recupererTousLesFilms(url);
+
+      afficherFilmsDansListe(
+        filmsCategorie.slice(0, 6),
+        "liste-autres-categories"
+      );
+    });
 
     // Bouton pour ouvrir la modale
     document
