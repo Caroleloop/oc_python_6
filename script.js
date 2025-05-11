@@ -29,7 +29,7 @@ async function recupererTousLesFilms(url) {
   return tousLesFilms;
 }
 
-// Fonction pour récupérer tous les genres paginés
+// Fonction pour récupérer tous les genres
 async function recupererTousLesGenres(url) {
   let tousLesGenres = [];
 
@@ -84,7 +84,7 @@ function afficherFilmsDansListe(films, elementId) {
 
     // Ajoute une image par défaut si l'image est introuvable
     img.onerror = function () {
-      img.src = "images/image1_1.png"; // Image de secours
+      img.src = "images/image1_1.png";
     };
 
     const titre = document.createElement("h3");
@@ -148,7 +148,7 @@ function ouvrirModale(film) {
   document.getElementById("modale").classList.remove("modale-cachee");
 }
 
-// Fermeture de la modale
+// fonction pour fermeture de la modale
 function fermerModale() {
   const modale = document.getElementById("modale");
   modale.classList.remove("modale");

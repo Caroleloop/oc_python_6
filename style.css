@@ -1,99 +1,291 @@
-/* style.css */
+/* Importation de la police Oswald */
+@import url("https://fonts.googleapis.com/css2?family=Oswald&display=swap");
 
-/* Modale cachée par défaut */
-.modale.modale-cachee {
-  display: none;
+:root {
+  --couleur-bandeau: #61787f;
+  --couleur-primaire: #000000;
+  --couleur-secondaire: #ffffff;
+  --couleur-accent: #000000;
+  --couleur-accent-hover: #c0392b;
+  --couleur-primaire-hover: #1a252f;
+  --couleur-texte: #000000;
+  --fond-modale: rgba(0, 0, 0, 0.8);
+  --largeur-max: 1200px;
+  --rayon-bordure: 25px;
 }
 
-/* Modale visible (positionnée au-dessus du reste) */
-.modale {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.8);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-/* Contenu de la modale */
-.contenu-modale {
-  background-color: #fff;
-  padding: 20px;
-  width: 80%;
-  max-width: 600px;
-  border-radius: 8px;
-  overflow-y: auto;
-  max-height: 90vh;
-  position: relative;
-}
-
-/* Bouton de fermeture */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
-
-/* RESET */
+/* Reset de base */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Police générale */
 body {
   font-family: "Oswald", sans-serif;
-  background-color: #ffffff;
-  color: #000000;
+  background-color: var(--couleur-secondaire);
+  color: var(--couleur-texte);
+  line-height: 1.6;
   padding: 20px;
 }
 
-/* Titres */
-h1 {
+/* En-tête */
+.bandeau {
+  display: flex;
+  justify-content: space-between;
+  background-color: var(--couleur-bandeau);
+  padding: 10px 20px;
+  color: white;
+}
+
+.titre-bandeau {
+  font-family: "Oswald", sans-serif;
+  position: absolute;
+  left: 25%;
+  transform: translateX(-50%);
   font-size: 40px;
+  color: white;
+  font-weight: 200;
+}
+
+.logo-bandeau {
+  top: -363px;
+  left: -1355px;
+}
+
+/* Sections principales */
+main {
+  max-width: var(--largeur-max);
+  margin: 0 auto;
+}
+
+section {
+  margin-bottom: 40px;
 }
 
 h2 {
   font-size: 48px;
-  margin: 20px 0 10px 0;
+  margin-bottom: 20px;
+  color: var(--couleur-primaire);
 }
 
-h3 {
-  font-size: 24px;
-  margin: 10px 0;
+/* Meilleur film */
+.film-en-vedette {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 6px solid black;
 }
 
-/* Bandeau */
-.bandeau {
+.film-en-vedette img {
+  max-width: 300px;
+  width: 100%;
+}
+
+.infos-film {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.titre-film {
+  font-size: 48px;
+  margin-bottom: 10px;
+  color: var(--couleur-primaire);
+}
+
+#resume-meilleur-film {
+  margin-bottom: 28px;
+}
+
+.bouton-details-meilleur-film {
+  align-self: flex-end;
+  background-color: #fa0b0b;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  outline: 2px solid #fa0b0b;
+  border-radius: 25px;
+  padding-top: 2px;
+  padding-right: 4px;
+  padding-bottom: 2px;
+  padding-left: 4px;
+}
+
+/* Listes de films */
+.liste-films {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  list-style: none;
+  padding: 0;
+}
+
+.film {
+  background-color: white;
+  border-radius: var(--rayon-bordure);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: calc(16.66% - 20px);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.film img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--rayon-bordure);
+  margin-bottom: 10px;
+}
+
+.film .titre-film {
+  font-size: 1rem;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.bouton-details {
+  background-color: var(--couleur-accent);
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: var(--rayon-bordure);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.bouton-details:hover {
+  background-color: var(--couleur-accent-hover);
+}
+
+/* Sélecteur de catégories */
+#select-categorie {
+  padding: 10px;
+  border-radius: var(--rayon-bordure);
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+}
+
+/* Bouton Voir plus */
+.voir-plus {
+  background-color: var(--couleur-primaire);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: var(--rayon-bordure);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.voir-plus:hover {
+  background-color: var(--couleur-primaire-hover);
+}
+
+/* Modale */
+.modale {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--fond-modale);
   display: flex;
   align-items: center;
-  background-color: #61787f;
-  padding: 15px 30px;
+  justify-content: center;
+  z-index: 1000;
 }
 
-.logo-bandeau {
-  height: 50px;
-  margin-right: 20px;
-  width: 127;
-  height: 94;
+.modale-cachee {
+  display: none;
 }
 
-.bandeau h1 {
-  color: #ffffff;
-  font-family: "Oswald", sans-serif;
-  font-weight: 300;
-  line-height: 100%;
-  letter-spacing: 0%;
-  vertical-align: middle;
+.contenu-modale {
+  background-color: white;
+  padding: 20px;
+  border-radius: var(--rayon-bordure);
+  max-width: 600px;
+  width: 90%;
+  max-height: 90%;
+  overflow-y: auto;
+  position: relative;
+}
+
+.contenu-modale img {
+  width: 100%;
+  height: auto;
+  border-radius: var(--rayon-bordure);
+  margin-bottom: 20px;
+}
+
+.contenu-modale h3 {
+  margin-bottom: 10px;
+  color: var(--couleur-primaire);
+}
+
+.contenu-modale p {
+  margin-bottom: 10px;
+}
+
+.fermer-modale {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--couleur-texte);
+}
+
+.fermer-modale:hover {
+  color: var(--couleur-accent);
+}
+
+/* Pied de page */
+footer {
+  margin-top: 40px;
+  text-align: center;
+  padding: 20px;
+  font-size: 0.9rem;
+  color: #888;
+}
+
+/* Responsive */
+@media screen and (max-width: 1024px) {
+  .film {
+    width: calc(25% - 20px); /* 4 par ligne */
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .film {
+    width: calc(33.33% - 20px); /* 3 par ligne */
+  }
+
+  .film-en-vedette {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .film {
+    width: 100%;
+  }
+
+  .bandeau {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+/* Masque tous les films supplémentaires */
+.film.hidden {
+  display: none;
 }
