@@ -181,26 +181,21 @@ h2 {
 }
 
 /* Sélecteur de catégories */
-#select-categorie {
-  padding: 10px;
-  border-radius: var(--rayon-bordure);
-  border: 1px solid #ccc;
+.categorie-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
   margin-bottom: 20px;
 }
 
-/* Bouton Voir plus */
-.voir-plus {
-  background-color: var(--couleur-primaire);
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: var(--rayon-bordure);
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+.categorie-header h2 {
+  margin-bottom: 0;
 }
 
-.voir-plus:hover {
-  background-color: var(--couleur-primaire-hover);
+.select-categorie {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: var(--rayon-bordure);
 }
 
 /* Modale */
@@ -224,7 +219,6 @@ h2 {
 .contenu-modale {
   background-color: white;
   padding: 20px;
-  border-radius: var(--rayon-bordure);
   max-width: 600px;
   width: 90%;
   max-height: 90%;
@@ -235,7 +229,6 @@ h2 {
 .contenu-modale img {
   width: 100%;
   height: auto;
-  border-radius: var(--rayon-bordure);
   margin-bottom: 20px;
 }
 
