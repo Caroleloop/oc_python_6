@@ -74,32 +74,28 @@
     <!--  Modale de détail d'un film-->
     <div id="modale" class="modale modale-cachee">
       <div class="contenu-modale">
+
+
+        <img id="modale-image" src="" alt="" />
+        <div class="contenu-texte">
+          <p class="contenu-texte"><h3 id="modale-titre"></h3>
+              <p><span id="modale-date"></span> - <span id="modale-genres"></span></p>
+              <p><span id="modale-classement"></span> - <span id="modale-duree"></span><span>(<span id="modale-pays"></span>)</span>
+</p>
+              <p><strong>Score IMDB :</strong> <span id="modale-score"></span></p>
+              <p><strong>Box-office :</strong> <span id="modale-boxoffice"></span></p>
+              <p><strong>Réalisateur :</strong> <span id="modale-realisateur"></span></p>
+          </p>
+          <p><span id="modale-description"></span></p>
+          <p><strong>Avec: </strong> <span id="modale-acteurs"></span></p>
+        </div>
         <button
           id="fermer-modale"
           class="fermer-modale"
           aria-label="Fermer la modale"
         >
-          <span aria-hidden="true">&times;</span
-          ><span class="sr-only">Fermer</span>
+          <span class="sr-only">Fermer</span>
         </button>
-
-        <img id="modale-image" src="" alt="" />
-        <h3 id="modale-titre"></h3>
-        <p><strong>Genres :</strong> <span id="modale-genres"></span></p>
-        <p><strong>Date de sortie :</strong> <span id="modale-date"></span></p>
-        <p>
-          <strong>Classification :</strong>
-          <span id="modale-classement"></span>
-        </p>
-        <p><strong>Score IMDB :</strong> <span id="modale-score"></span></p>
-        <p>
-          <strong>Réalisateur :</strong> <span id="modale-realisateur"></span>
-        </p>
-        <p><strong>Acteurs :</strong> <span id="modale-acteurs"></span></p>
-        <p><strong>Durée :</strong> <span id="modale-duree"></span></p>
-        <p><strong>Pays :</strong> <span id="modale-pays"></span></p>
-        <p><strong>Box-office :</strong> <span id="modale-boxoffice"></span></p>
-        <p><strong>Résumé :</strong><span id="modale-description"></span></p>
       </div>
     </div>
   </body>

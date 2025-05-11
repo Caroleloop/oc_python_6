@@ -49,14 +49,16 @@ body {
 }
 
 .logo-bandeau {
-  top: -363px;
-  left: -1355px;
+  position: relative;
+  top: 0;
+  left: 0;
 }
 
 /* Sections principales */
 main {
   max-width: var(--largeur-max);
   margin: 0 auto;
+  padding: 0 10px;
 }
 
 section {
@@ -81,8 +83,9 @@ h2 {
 }
 
 .film-en-vedette img {
-  top: -106px;
-  left: -1355px;
+  position: relative;
+  top: 0;
+  left: 0;
 }
 
 .infos-film {
@@ -123,7 +126,7 @@ h2 {
 /* Listes de films */
 .liste-films {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 40px;
   list-style: none;
   padding: 0;
@@ -217,43 +220,91 @@ h2 {
 }
 
 .contenu-modale {
-  background-color: white;
-  padding: 20px;
-  max-width: 600px;
-  width: 90%;
-  max-height: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background-color: #ffffff;
+  padding: 30px;
+  max-width: 900px;
+  width: 100%;
+  max-height: 90vh;
   overflow-y: auto;
   position: relative;
+  border: 6px solid black;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
 }
 
 .contenu-modale img {
-  width: 100%;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 150px;
   height: auto;
-  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.contenu-texte {
+  font-weight: 200;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-top: 20px;
 }
 
 .contenu-modale h3 {
+  font-size: 2rem;
   margin-bottom: 10px;
-  color: var(--couleur-primaire);
+  color: #000000;
+  font-weight: bold;
 }
 
 .contenu-modale p {
   margin-bottom: 10px;
+  margin: 5px 0;
+  color: #333;
+  line-height: 1.4;
 }
 
 .fermer-modale {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
+  margin-top: 20px;
+  align-self: center;
+  background-color: #fa0b0b;
+  color: white;
+  padding: 10px 25px;
+  font-size: 1rem;
   border: none;
-  font-size: 1.5rem;
+  border-radius: 20px;
   cursor: pointer;
-  color: #fa0b0b;
 }
 
 .fermer-modale:hover {
-  color: var(--couleur-accent);
+  background-color: #c90a0a;
+}
+
+@media screen and (max-width: 768px) {
+  .contenu-modale {
+    padding: 20px;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .contenu-modale img {
+    width: 100%;
+    max-width: 300px;
+    margin-left: 0;
+    margin-bottom: 20px;
+  }
+
+  .fermer-modale {
+    width: 100%;
+    margin-top: 20px;
+  }
+}
+
+/* Texte à côté de l'image */
+.contenu-texte {
+  flex-grow: 1;
 }
 
 /* Pied de page */
