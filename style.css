@@ -41,7 +41,7 @@ body {
 .titre-bandeau {
   font-family: "Oswald", sans-serif;
   position: absolute;
-  left: 25%;
+  left: 50%;
   transform: translateX(-50%);
   font-size: 40px;
   color: white;
@@ -81,8 +81,8 @@ h2 {
 }
 
 .film-en-vedette img {
-  max-width: 300px;
-  width: 100%;
+  top: -106px;
+  left: -1355px;
 }
 
 .infos-film {
@@ -99,7 +99,10 @@ h2 {
 }
 
 #resume-meilleur-film {
-  margin-bottom: 28px;
+  font-weight: 200;
+  font-size: 28px;
+  line-height: 100%;
+  letter-spacing: 0%;
 }
 
 .bouton-details-meilleur-film {
@@ -110,7 +113,7 @@ h2 {
   cursor: pointer;
   transition: background-color 0.3s ease;
   outline: 2px solid #fa0b0b;
-  border-radius: 25px;
+  border-radius: var(--rayon-bordure);
   padding-top: 2px;
   padding-right: 4px;
   padding-bottom: 2px;
@@ -119,38 +122,50 @@ h2 {
 
 /* Listes de films */
 .liste-films {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
   list-style: none;
   padding: 0;
 }
 
 .film {
-  background-color: white;
-  border-radius: var(--rayon-bordure);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  width: calc(16.66% - 20px);
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  position: relative;
+  overflow: hidden;
 }
 
 .film img {
   width: 100%;
+  display: block;
   height: auto;
-  border-radius: var(--rayon-bordure);
-  margin-bottom: 10px;
 }
 
-.film .titre-film {
-  font-size: 1rem;
-  margin-bottom: 10px;
-  text-align: center;
+/* Overlay contenant titre et bouton */
+.film-overlay {
+  position: absolute;
+  top: 15%;
+  left: 0;
+  width: 100%;
+  height: 30%;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  padding: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
-.bouton-details {
+/* Titre du film dans l'overlay */
+.film-overlay .titre-film_liste {
+  margin: 0 0 10px 0;
+  font-size: 24px;
+  color: white;
+}
+
+/* Bouton dans l'overlay */
+.film-overlay .bouton-details {
+  align-self: flex-end;
   background-color: var(--couleur-accent);
   color: white;
   border: none;
@@ -158,9 +173,10 @@ h2 {
   border-radius: var(--rayon-bordure);
   cursor: pointer;
   transition: background-color 0.3s ease;
+  margin-top: auto;
 }
 
-.bouton-details:hover {
+.film-overlay .bouton-details:hover {
   background-color: var(--couleur-accent-hover);
 }
 
@@ -240,7 +256,7 @@ h2 {
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
-  color: var(--couleur-texte);
+  color: #fa0b0b;
 }
 
 .fermer-modale:hover {

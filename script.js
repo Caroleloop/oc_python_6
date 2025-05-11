@@ -87,8 +87,12 @@ function afficherFilmsDansListe(films, elementId) {
       img.src = "images/image1_1.png";
     };
 
+    // Créer l'overlay
+    const overlay = document.createElement("div");
+    overlay.classList.add("film-overlay");
+
     const titre = document.createElement("h3");
-    titre.classList.add("titre-film");
+    titre.classList.add("titre-film_liste");
     titre.textContent = film.title;
 
     const bouton = document.createElement("button");
@@ -97,9 +101,11 @@ function afficherFilmsDansListe(films, elementId) {
     bouton.textContent = "Détails";
     bouton.addEventListener("click", () => ouvrirModale(film));
 
+    overlay.appendChild(titre);
+    overlay.appendChild(bouton);
+
     li.appendChild(img);
-    li.appendChild(titre);
-    li.appendChild(bouton);
+    li.appendChild(overlay);
     ul.appendChild(li);
   });
 }
