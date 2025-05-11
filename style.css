@@ -1,5 +1,49 @@
 /* style.css */
 
+/* Modale cachée par défaut */
+.modale.modale-cachee {
+  display: none;
+}
+
+/* Modale visible (positionnée au-dessus du reste) */
+.modale {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Contenu de la modale */
+.contenu-modale {
+  background-color: #fff;
+  padding: 20px;
+  width: 80%;
+  max-width: 600px;
+  border-radius: 8px;
+  overflow-y: auto;
+  max-height: 90vh;
+  position: relative;
+}
+
+/* Bouton de fermeture */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* RESET */
 * {
   margin: 0;
@@ -52,38 +96,4 @@ h3 {
   line-height: 100%;
   letter-spacing: 0%;
   vertical-align: middle;
-}
-
-.modale-cachee {
-  display: none;
-}
-
-.modale {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(236, 114, 114, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.contenu-modale {
-  background-color: rgb(255, 167, 167);
-  padding: 20px;
-  border-radius: 8px;
-  width: 80%;
-  max-width: 600px;
-}
-
-.fermer-modale {
-  background: none;
-  border: none;
-  font-size: 2em;
-  cursor: pointer;
-  position: absolute;
-  top: 10px;
-  right: 10px;
 }

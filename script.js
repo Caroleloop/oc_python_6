@@ -1,3 +1,4 @@
+// Récupérer tous les films
 async function recupererTousLesFilms(url) {
   let tousLesFilms = [];
 
@@ -7,7 +8,15 @@ async function recupererTousLesFilms(url) {
       const data = await reponse.json();
 
       // Ajoute les résultats de cette page
-      tousLesFilms = tousLesFilms.concat(data.results);
+      for (const filmPartiel of data.results) {
+        try {
+          const res = await fetch(filmPartiel.url);
+          const filmComplet = await res.json();
+          tousLesFilms.push(filmComplet);
+        } catch (err) {
+          console.error("Erreur en récupérant les détails d’un film :", err);
+        }
+      }
 
       // Passe à l'URL suivante (ou null s'il n'y en a plus)
       url = data.next;
@@ -55,6 +64,7 @@ async function remplirSelectGenres() {
   });
 }
 
+// Fonction pour afficher les films dans une liste
 function afficherFilmsDansListe(films, elementId) {
   const ul = document.getElementById(elementId);
   if (!ul) {
@@ -74,7 +84,7 @@ function afficherFilmsDansListe(films, elementId) {
 
     // Ajoute une image par défaut si l'image est introuvable
     img.onerror = function () {
-      img.src = "images/image1 1.png"; // Remplace par le chemin de ton image de secours
+      img.src = "images/image1_1.png"; // Image de secours
     };
 
     const titre = document.createElement("h3");
@@ -92,6 +102,57 @@ function afficherFilmsDansListe(films, elementId) {
     li.appendChild(bouton);
     ul.appendChild(li);
   });
+}
+
+//Fonction pour ouvrir la modale
+function ouvrirModale(film) {
+  console.log("Film passé à ouvrirModale :", film);
+  const modale = document.getElementById("modale");
+  modale.classList.remove("modale-cachee");
+  modale.classList.add("modale");
+
+  if (!film.url) {
+    console.error("film.url est indéfini !");
+    return;
+  }
+
+  const imageModale = document.getElementById("modale-image");
+  imageModale.src = film.image_url;
+  imageModale.onerror = () => {
+    imageModale.src = "images/image1 1.png";
+  };
+
+  console.log("Affichage de la modale pour :", film);
+
+  document.getElementById("modale-image").src = film.image_url;
+  document.getElementById("modale-titre").textContent = film.title;
+  document.getElementById("modale-genres").textContent =
+    film.genres?.join(", ") || "N/A";
+  document.getElementById("modale-date").textContent = film.date_published;
+  document.getElementById("modale-classement").textContent =
+    film.rated || "N/A";
+  document.getElementById("modale-score").textContent = film.avg_vote || "N/A";
+  document.getElementById("modale-realisateur").textContent =
+    film.directors?.join(", ") || "N/A";
+  document.getElementById("modale-acteurs").textContent =
+    film.actors?.join(", ") || "N/A";
+  document.getElementById("modale-duree").textContent = film.duration + " min";
+  document.getElementById("modale-pays").textContent =
+    film.countries?.join(", ") || "N/A";
+  document.getElementById("modale-boxoffice").textContent =
+    film.worldwide_gross_income || "N/A";
+  document.getElementById("modale-description").textContent =
+    film.long_description || film.description || "Pas de description.";
+
+  // Affiche la modale
+  document.getElementById("modale").classList.remove("modale-cachee");
+}
+
+// Fermeture de la modale
+function fermerModale() {
+  const modale = document.getElementById("modale");
+  modale.classList.remove("modale");
+  modale.classList.add("modale-cachee");
 }
 
 ////
@@ -116,6 +177,17 @@ document.addEventListener("DOMContentLoaded", async () => {
     const details = await fetch(meilleurFilm.url).then((res) => res.json());
     document.getElementById("resume-meilleur-film").textContent =
       details.description;
+
+    //Bouton "Détails" du meilleur film
+    document
+      .getElementById("bouton-details-meilleur-film")
+      .addEventListener("click", () => {
+        ouvrirModale(meilleurFilm);
+      });
+    // Fermer la modale
+    document
+      .getElementById("fermer-modale")
+      .addEventListener("click", fermerModale);
 
     // Films les mieux notés
     afficherFilmsDansListe(films.slice(1, 7), "films-mieux-notes");
@@ -145,47 +217,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         "liste-autres-categories"
       );
     });
-
-    // Bouton pour ouvrir la modale
-    document
-      .querySelector(".bouton-details-meilleur-film")
-      .addEventListener("click", () => ouvrirModale(meilleurFilm));
-  } catch (error) {
-    console.error("Une erreur est survenue :", error);
+  } catch (erreur) {
+    console.error("Erreur lors du chargement initial :", erreur);
   }
-
-  //Fonction pour ouvrir la modale
-  function ouvrirModale(film) {
-    fetch(film.url)
-      .then((res) => res.json())
-      .then((details) => {
-        document.getElementById("modale-image").src = details.image_url;
-        document.getElementById("modale-titre").textContent = details.title;
-        document.getElementById("modale-genres").textContent =
-          details.genres?.join(", ") || "N/A";
-        document.getElementById("modale-date").textContent =
-          details.release_date;
-        document.getElementById("modale-classement").textContent =
-          details.rating;
-        document.getElementById("modale-score").textContent =
-          details.imdb_score;
-        document.getElementById("modale-realisateur").textContent =
-          details.director;
-        document.getElementById("modale-acteurs").textContent =
-          details.actors?.join(", ") || "N/A";
-        document.getElementById("modale-duree").textContent = details.duration;
-        document.getElementById("modale-pays").textContent = details.country;
-        document.getElementById("modale-boxoffice").textContent =
-          details.box_office || "N/A";
-        document.getElementById("modale-description").textContent =
-          details.description;
-
-        // Affiche la modale
-        document.getElementById("modale").classList.remove("modale-cachee");
-      });
-  }
-  // Fermeture de la modale
-  document.querySelector(".fermer-modale").addEventListener("click", () => {
-    document.getElementById("modale").classList.add("modale-cachee");
-  });
 });
