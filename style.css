@@ -250,6 +250,11 @@ h2 {
   flex-direction: column;
   justify-content: flex-start;
   margin-top: 20px;
+  margin-bottom: 5px;
+}
+
+.contenu-texte p.espace-apres {
+  margin-bottom: 25px;
 }
 
 .contenu-modale h3 {
