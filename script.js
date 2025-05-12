@@ -6,7 +6,6 @@ async function recupererTousLesFilms(url) {
     try {
       const reponse = await fetch(url);
       const data = await reponse.json();
-
       // Ajoute les résultats de cette page
       for (const filmPartiel of data.results) {
         try {
@@ -17,7 +16,6 @@ async function recupererTousLesFilms(url) {
           console.error("Erreur en récupérant les détails d’un film :", err);
         }
       }
-
       // Passe à l'URL suivante (ou null s'il n'y en a plus)
       url = data.next;
     } catch (erreur) {
@@ -25,19 +23,16 @@ async function recupererTousLesFilms(url) {
       break;
     }
   }
-
   return tousLesFilms;
 }
 
 // Fonction pour récupérer tous les genres
 async function recupererTousLesGenres(url) {
   let tousLesGenres = [];
-
   while (url) {
     try {
       const reponse = await fetch(url);
       const data = await reponse.json();
-
       tousLesGenres = tousLesGenres.concat(data.results);
       url = data.next; // Prochaine page
     } catch (erreur) {
@@ -45,7 +40,6 @@ async function recupererTousLesGenres(url) {
       break;
     }
   }
-
   return tousLesGenres;
 }
 
@@ -55,7 +49,6 @@ async function remplirSelectGenres() {
     "http://localhost:8000/api/v1/genres/"
   );
   const selectCategorie = document.getElementById("select-categorie");
-
   genres.forEach((genre) => {
     const option = document.createElement("option");
     option.value = genre.name;
@@ -71,42 +64,35 @@ function afficherFilmsDansListe(films, elementId) {
     console.error(`Élément avec l'ID "${elementId}" introuvable.`);
     return;
   }
-
   ul.innerHTML = "";
-
   films.forEach((film) => {
     const li = document.createElement("li");
     li.classList.add("film");
-
     const img = document.createElement("img");
     img.src = film.image_url;
     img.alt = `Affiche de ${film.title}`;
-
     // Ajoute une image par défaut si l'image est introuvable
     img.onerror = function () {
       img.src = "images/image1_1.png";
     };
-
     // Créer l'overlay
     const overlay = document.createElement("div");
     overlay.classList.add("film-overlay");
-
     const titre = document.createElement("h3");
     titre.classList.add("titre-film_liste");
     titre.textContent = film.title;
-
     const bouton = document.createElement("button");
     bouton.classList.add("bouton-details");
     bouton.setAttribute("aria-label", `Voir les détails de ${film.title}`);
     bouton.textContent = "Détails";
     bouton.addEventListener("click", () => ouvrirModale(film));
-
     overlay.appendChild(titre);
     overlay.appendChild(bouton);
-
     li.appendChild(img);
     li.appendChild(overlay);
     ul.appendChild(li);
+    const maxVisible = getMaxVisibleFilms();
+    masquerFilms(ul, maxVisible);
   });
 }
 
@@ -161,6 +147,38 @@ function fermerModale() {
   modale.classList.add("modale-cachee");
 }
 
+function masquerFilms(ul, maxVisible) {
+  const films = ul.querySelectorAll(".film");
+  films.forEach((film, index) => {
+    if (index < maxVisible) {
+      film.classList.remove("hidden");
+    } else {
+      film.classList.add("hidden");
+    }
+  });
+}
+
+function getMaxVisibleFilms() {
+  const largeur = window.innerWidth;
+  if (largeur <= 480) return 2;
+  if (largeur <= 1024) return 4;
+  return 6;
+}
+
+function activerBoutonsVoirPlus() {
+  const boutons = document.querySelectorAll(".voir-plus");
+
+  boutons.forEach((bouton) => {
+    bouton.addEventListener("click", () => {
+      const idListe = bouton.previousElementSibling.id;
+      const ul = document.getElementById(idListe);
+      const films = ul.querySelectorAll(".film");
+      films.forEach((film) => film.classList.remove("hidden"));
+      bouton.style.display = "none";
+    });
+  });
+}
+
 ////
 document.addEventListener("DOMContentLoaded", async () => {
   const allMoviesUrl =
@@ -197,14 +215,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Films les mieux notés
     afficherFilmsDansListe(films.slice(1, 7), "films-mieux-notes");
+    activerBoutonsVoirPlus();
 
     // Récupérer les films de comédie
     const filmsComedies = await recupererTousLesFilms(comedyUrl);
     afficherFilmsDansListe(filmsComedies.slice(0, 6), "categorie-comedies");
+    activerBoutonsVoirPlus();
 
     // Récupérer les films de fantasy
     const filmsFantasy = await recupererTousLesFilms(fantasyUrl);
     afficherFilmsDansListe(filmsFantasy.slice(0, 6), "categorie-fantasy");
+    activerBoutonsVoirPlus();
 
     // Remplit le select avec les catégories
     await remplirSelectGenres();
@@ -222,6 +243,28 @@ document.addEventListener("DOMContentLoaded", async () => {
         filmsCategorie.slice(0, 6),
         "liste-autres-categories"
       );
+      activerBoutonsVoirPlus();
+    });
+    document.querySelectorAll(".voir-plus").forEach((bouton) => {
+      bouton.addEventListener("click", () => {
+        const section = bouton.previousElementSibling; // ul.liste-films
+        const filmsCaches = section.querySelectorAll(
+          ".film.hidden, .film:nth-child(n+3)"
+        );
+
+        if (bouton.textContent === "Voir plus") {
+          filmsCaches.forEach((film) => (film.style.display = "block"));
+          bouton.textContent = "Voir moins";
+        } else {
+          filmsCaches.forEach((film, index) => {
+            const screenWidth = window.innerWidth;
+            if (screenWidth <= 480 && index >= 2) film.style.display = "none";
+            else if (screenWidth <= 1024 && index >= 4)
+              film.style.display = "none";
+          });
+          bouton.textContent = "Voir plus";
+        }
+      });
     });
   } catch (erreur) {
     console.error("Erreur lors du chargement initial :", erreur);

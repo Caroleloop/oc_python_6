@@ -350,7 +350,34 @@ footer {
   }
 }
 
+/* Mobile : cacher tous les films après le 2e */
+@media screen and (max-width: 480px) {
+  .liste-films .film:nth-child(n + 3) {
+    display: none;
+  }
+}
+
+/* Tablette : cacher tous les films après le 4e */
+@media screen and (min-width: 481px) and (max-width: 1024px) {
+  .liste-films .film:nth-child(n + 5) {
+    display: none;
+  }
+}
+
+/* Ordinateur : tout est visible */
+@media screen and (min-width: 1025px) {
+  .liste-films .film {
+    display: block !important;
+  }
+}
 /* Masque tous les films supplémentaires */
-.film.hidden {
+.film .hidden {
   display: none;
+}
+
+/* Cacher le bouton “Voir plus” en version desktop */
+@media screen and (min-width: 1025px) {
+  .voir-plus {
+    display: none;
+  }
 }
