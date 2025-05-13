@@ -1,8 +1,8 @@
 // Récupérer tous les films
-async function recupererTousLesFilms(url) {
+async function recupererTousLesFilms(url, limite = 11) {
   let tousLesFilms = [];
 
-  while (tousLesFilms.length <= 11) {
+  while (tousLesFilms.length <= limite) {
     try {
       const reponse = await fetch(url);
       const data = await reponse.json();
@@ -74,6 +74,7 @@ function afficherFilmsDansListe(films, elementId) {
     // Ajoute une image par défaut si l'image est introuvable
     img.onerror = function () {
       img.src = "images/image1_1.png";
+      img.alt = "Image non disponible";
     };
     // Créer l'overlay
     const overlay = document.createElement("div");

@@ -43,7 +43,6 @@ body {
 }
 
 .titre-bandeau {
-  font-family: "Oswald", sans-serif;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
@@ -87,12 +86,6 @@ h2 {
   border: 6px solid black;
 }
 
-.film-en-vedette img {
-  position: relative;
-  top: 0;
-  left: 0;
-}
-
 .infos-film {
   flex: 1;
   display: flex;
@@ -122,10 +115,7 @@ h2 {
   transition: background-color 0.3s ease;
   outline: 2px solid #fa0b0b;
   border-radius: var(--rayon-bordure);
-  padding-top: 8px;
-  padding-right: 16px;
-  padding-bottom: 8px;
-  padding-left: 16px;
+  padding: 8px 16px;
   margin-top: auto;
 }
 
@@ -167,7 +157,7 @@ h2 {
 
 /* Titre du film dans l'overlay */
 .film-overlay .titre-film_liste {
-  margin: 0 0 10px 0;
+  margin: 0 0 10px;
   font-size: 24px;
   color: white;
 }
@@ -195,7 +185,6 @@ h2 {
   align-items: center;
   gap: 20px;
   font-weight: bold;
-  font-family: "Oswald", sans-serif;
   margin-bottom: 20px;
   font-size: 18px;
 }
@@ -214,10 +203,10 @@ h2 {
   -moz-appearance: none;
   border: 1px solid black;
   padding: 8px 30px 8px 10px;
-  font-size: 30px;
+  font-size: 24px;
   background-color: white;
   color: black;
-  width: 150px;
+  width: auto;
   font-weight: 400;
 }
 .select-wrapper::after {
@@ -409,6 +398,11 @@ h2 {
   }
   .fermer-modale {
     display: none;
+  }
+  .film-en-vedette {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
 }
 
