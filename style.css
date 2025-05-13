@@ -269,6 +269,15 @@ h2 {
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
   font-size: 24px;
 }
+.croix-fermer {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 50px;
+  color: red;
+  cursor: pointer;
+  display: none;
+}
 
 .contenu-modale img {
   position: absolute;
@@ -391,6 +400,29 @@ footer {
     align-items: center; /* aligne les enfants au centre */
     text-align: center;
   }
+  .contenu-modale {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .contenu-modale img {
+    position: static;
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    align-self: center;
+    margin: 20px 0;
+  }
+  .contenu-texte {
+    width: 100%;
+  }
+  .croix-fermer {
+    display: block; /* Afficher la croix sur mobile */
+  }
+  .fermer-modale {
+    display: none; /* Cacher le bouton de fermeture sur mobile */
+  }
 }
 
 /* Tablette : cacher tous les films après le 4e */
@@ -445,6 +477,12 @@ footer {
   .contenu-texte {
     width: 100%;
   }
+  .croix-fermer {
+    display: block; /* Afficher la croix sur mobile */
+  }
+  .fermer-modale {
+    display: none; /* Cacher le bouton de fermeture sur mobile */
+  }
 }
 
 /* Ordinateur : tout est visible */
@@ -454,6 +492,12 @@ footer {
   }
 
   .voir-plus {
+    display: none;
+  }
+  .fermer-modale {
+    display: block;
+  }
+  .croix-fermer {
     display: none;
   }
 }
