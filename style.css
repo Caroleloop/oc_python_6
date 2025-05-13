@@ -296,7 +296,7 @@ h2 {
 }
 
 .contenu-modale img {
-  position: relative;
+  position: absolute;
   top: 20px;
   right: 20px;
   width: 200px;
@@ -347,18 +347,9 @@ h2 {
   background-color: #c90a0a;
 }
 
-/* Texte à côté de l'image */
-.contenu-texte {
-  flex-grow: 1;
-}
-
-/* Pied de page */
-footer {
-  margin-top: 40px;
-  text-align: center;
-  padding: 20px;
-  font-size: 0.9rem;
-  color: #888;
+/* Masque tous les films supplémentaires */
+.film .hidden {
+  display: none;
 }
 
 /* Responsive */
@@ -496,11 +487,4 @@ footer {
   .croix-fermer {
     display: none;
   }
-}
-
-/* Masque tous les films supplémentaires */
-.film .hidden {
-  display: block;
-  opacity: 1;
-  visibility: visible;
 }
