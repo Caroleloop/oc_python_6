@@ -49,9 +49,10 @@ body {
 }
 
 .logo-bandeau {
-  position: relative;
-  top: 0;
-  left: 0;
+  width: 100px;
+  height: auto;
+  object-fit: contain;
+  image-rendering: auto;
 }
 
 /* Sections principales */
@@ -121,6 +122,7 @@ h2 {
   padding-right: 4px;
   padding-bottom: 2px;
   padding-left: 4px;
+  margin-top: auto;
 }
 
 /* Listes de films */
@@ -322,38 +324,39 @@ footer {
 }
 
 /* Responsive */
-@media screen and (max-width: 1024px) {
-  .film {
-    width: calc(25% - 20px); /* 4 par ligne */
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .film {
-    width: calc(33.33% - 20px); /* 3 par ligne */
-  }
-
-  .film-en-vedette {
-    flex-direction: column;
-    align-items: center;
-  }
-}
-
-@media screen and (max-width: 480px) {
-  .film {
-    width: 100%;
-  }
-
-  .bandeau {
-    flex-direction: column;
-    text-align: center;
-  }
-}
-
 /* Mobile : cacher tous les films après le 2e */
 @media screen and (max-width: 480px) {
   .liste-films .film:nth-child(n + 3) {
     display: none;
+  }
+  .film {
+    width: 100%;
+  }
+  #bouton-details-meilleur-film {
+    align-self: center;
+    margin-top: 20px;
+  }
+  .voir-plus {
+    margin: 20px auto 0 auto;
+    display: block;
+    text-align: center;
+  }
+  .bandeau {
+    flex-direction: column;
+    text-align: center;
+  }
+  .titre-bandeau {
+    display: none;
+  }
+  .logo-bandeau {
+    display: block;
+    margin: 0 auto; /* centre horizontalement */
+  }
+
+  .bandeau {
+    flex-direction: column;
+    align-items: center; /* aligne les enfants au centre */
+    text-align: center;
   }
 }
 
@@ -362,6 +365,31 @@ footer {
   .liste-films .film:nth-child(n + 5) {
     display: none;
   }
+  .film {
+    width: calc(33.33% - 20px); /* 3 par ligne */
+  }
+
+  .film-en-vedette {
+    flex-direction: column;
+    align-items: center;
+  }
+  .film-en-vedette {
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+  }
+  #bouton-details-meilleur-film {
+    align-self: right;
+    margin-top: auto;
+  }
+  .film-en-vedette img {
+    max-width: 40%;
+    height: auto;
+  }
+
+  .infos-film {
+    max-width: 60%;
+  }
 }
 
 /* Ordinateur : tout est visible */
@@ -369,15 +397,13 @@ footer {
   .liste-films .film {
     display: block !important;
   }
-}
-/* Masque tous les films supplémentaires */
-.film .hidden {
-  display: none;
-}
 
-/* Cacher le bouton “Voir plus” en version desktop */
-@media screen and (min-width: 1025px) {
   .voir-plus {
     display: none;
   }
+}
+
+/* Masque tous les films supplémentaires */
+.film .hidden {
+  display: none;
 }
