@@ -190,17 +190,49 @@ h2 {
   display: flex;
   align-items: center;
   gap: 20px;
+  font-weight: bold;
+  font-family: "Oswald", sans-serif;
   margin-bottom: 20px;
+  font-size: 18px;
 }
 
 .categorie-header h2 {
   margin-bottom: 0;
 }
 
+.select-wrapper {
+  position: relative;
+  display: inline-block;
+}
+.select-wrapper select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: 1px solid black;
+  padding: 8px 30px 8px 10px;
+  font-size: 30px;
+  background-color: white;
+  color: black;
+  width: 150px;
+  font-weight: 400;
+}
+.select-wrapper::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 10px solid black;
+  pointer-events: none;
+}
+
 .select-categorie {
   padding: 10px;
   border: 1px solid #ccc;
-  border-radius: var(--rayon-bordure);
 }
 
 /* Modale */
@@ -366,18 +398,17 @@ footer {
     display: none;
   }
   .film {
-    width: calc(33.33% - 20px); /* 3 par ligne */
+    width: calc(50% - 20px); /* 3 par ligne */
+    gap: 20px;
+    width: 100%;
   }
 
-  .film-en-vedette {
-    flex-direction: column;
-    align-items: center;
-  }
   .film-en-vedette {
     flex-direction: row;
     align-items: center;
     gap: 20px;
   }
+
   #bouton-details-meilleur-film {
     align-self: right;
     margin-top: auto;
@@ -389,6 +420,11 @@ footer {
 
   .infos-film {
     max-width: 60%;
+  }
+  .voir-plus {
+    margin: 20px auto 0 auto;
+    display: block;
+    text-align: center;
   }
 }
 
