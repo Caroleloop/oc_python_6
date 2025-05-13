@@ -67,7 +67,7 @@ function afficherFilmsDansListe(films, elementId) {
   ul.innerHTML = "";
   films.forEach((film) => {
     const li = document.createElement("li");
-    li.classList.add("film");
+    li.classList.add("film", "hidden");
     const img = document.createElement("img");
     img.src = film.image_url;
     img.alt = `Affiche de ${film.title}`;
@@ -91,13 +91,14 @@ function afficherFilmsDansListe(films, elementId) {
     li.appendChild(img);
     li.appendChild(overlay);
     ul.appendChild(li);
-    const maxVisible = getMaxVisibleFilms();
-    masquerFilms(ul, maxVisible);
   });
+  const maxVisible = getMaxVisibleFilms();
+  masquerFilms(ul, maxVisible);
 }
 
 //Fonction pour ouvrir la modale
 function ouvrirModale(film) {
+  document.body.classList.add("corps-verrouille");
   console.log("Film passé à ouvrirModale :", film);
   const modale = document.getElementById("modale");
   modale.classList.remove("modale-cachee");
@@ -145,6 +146,7 @@ function fermerModale() {
   const modale = document.getElementById("modale");
   modale.classList.remove("modale");
   modale.classList.add("modale-cachee");
+  document.body.classList.remove("corps-verrouille");
 }
 
 function masquerFilms(ul, maxVisible) {
@@ -170,10 +172,19 @@ function activerBoutonsVoirPlus() {
 
   boutons.forEach((bouton) => {
     bouton.addEventListener("click", () => {
-      const idListe = bouton.previousElementSibling.id;
-      const ul = document.getElementById(idListe);
+      // Trouve la <section> qui contient le bouton
+      const section = bouton.closest("section");
+      if (!section) return;
+
+      // Trouve le <ul> dans cette section
+      const ul = section.querySelector("ul");
+      if (!ul) return;
+
+      // Affiche tous les films
       const films = ul.querySelectorAll(".film");
       films.forEach((film) => film.classList.remove("hidden"));
+
+      // Cache le bouton "Voir plus"
       bouton.style.display = "none";
     });
   });
@@ -215,17 +226,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Films les mieux notés
     afficherFilmsDansListe(films.slice(1, 7), "films-mieux-notes");
-    activerBoutonsVoirPlus();
 
     // Récupérer les films de comédie
     const filmsComedies = await recupererTousLesFilms(comedyUrl);
     afficherFilmsDansListe(filmsComedies.slice(0, 6), "categorie-comedies");
-    activerBoutonsVoirPlus();
 
     // Récupérer les films de fantasy
     const filmsFantasy = await recupererTousLesFilms(fantasyUrl);
     afficherFilmsDansListe(filmsFantasy.slice(0, 6), "categorie-fantasy");
-    activerBoutonsVoirPlus();
 
     // Remplit le select avec les catégories
     await remplirSelectGenres();
@@ -243,29 +251,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         filmsCategorie.slice(0, 6),
         "liste-autres-categories"
       );
-      activerBoutonsVoirPlus();
     });
-    document.querySelectorAll(".voir-plus").forEach((bouton) => {
-      bouton.addEventListener("click", () => {
-        const section = bouton.previousElementSibling; // ul.liste-films
-        const filmsCaches = section.querySelectorAll(
-          ".film.hidden, .film:nth-child(n+3)"
-        );
-
-        if (bouton.textContent === "Voir plus") {
-          filmsCaches.forEach((film) => (film.style.display = "block"));
-          bouton.textContent = "Voir moins";
-        } else {
-          filmsCaches.forEach((film, index) => {
-            const screenWidth = window.innerWidth;
-            if (screenWidth <= 480 && index >= 2) film.style.display = "none";
-            else if (screenWidth <= 1024 && index >= 4)
-              film.style.display = "none";
-          });
-          bouton.textContent = "Voir plus";
-        }
-      });
-    });
+    activerBoutonsVoirPlus();
   } catch (erreur) {
     console.error("Erreur lors du chargement initial :", erreur);
   }
