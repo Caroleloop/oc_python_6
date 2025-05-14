@@ -252,6 +252,16 @@ document.addEventListener("DOMContentLoaded", async () => {
         filmsCategorie.slice(0, 6),
         "liste-autres-categories"
       );
+      // Réaffiche le bouton "Voir plus"
+      const section = document
+        .getElementById("liste-autres-categories")
+        ?.closest("section");
+      if (section) {
+        const boutonVoirPlus = section.querySelector(".voir-plus");
+        if (boutonVoirPlus) {
+          boutonVoirPlus.style.display = "";
+        }
+      }
     });
     activerBoutonsVoirPlus();
   } catch (erreur) {
