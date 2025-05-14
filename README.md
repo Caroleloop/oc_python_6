@@ -75,7 +75,7 @@ Clonez le dépôt de l'API :
 
 Suivez les instructions du fichier README.md du dépôt OCMovies API GitHub Repository pour installer et démarrer le serveur de l'API.
 
-Après avoir démarré le serveur de l'API, vous pouvez ouvrir index.html dans un navigateur web moderne.
+Après avoir démarré le serveur de l'API, vous pouvez ouvrir index.html dans un navigateur web.
 
 ## Utilisation
 
