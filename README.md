@@ -67,7 +67,7 @@ Interdits : tout autre framework JS (React, Angular, VueJS) ou CSS non listé, p
 
 Clonez ce dépôt :
 
-    git clone git@github.com:Caroleloop/oc_python_6.git
+    git clone git@github.com:Caroleloop/oc_python_6_Developpez_une_interface_utilisateur_pour_une_application_web_Python.git
 
 Clonez le dépôt de l'API :
 
