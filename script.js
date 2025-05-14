@@ -173,20 +173,35 @@ function activerBoutonsVoirPlus() {
 
   boutons.forEach((bouton) => {
     bouton.addEventListener("click", () => {
-      // Trouve la <section> qui contient le bouton
       const section = bouton.closest("section");
       if (!section) return;
 
-      // Trouve le <ul> dans cette section
       const ul = section.querySelector("ul");
       if (!ul) return;
 
-      // Affiche tous les films
       const films = ul.querySelectorAll(".film");
-      films.forEach((film) => film.classList.remove("hidden"));
+      const filmsArray = Array.from(films);
 
-      // Cache le bouton "Voir plus"
-      bouton.style.display = "none";
+      const tousVisibles = filmsArray.every(
+        (film) => !film.classList.contains("hidden")
+      );
+
+      if (tousVisibles) {
+        // Cas : Voir moins → revenir à l’affichage par défaut
+        const maxVisible = getMaxVisibleFilms();
+        filmsArray.forEach((film, index) => {
+          if (index < maxVisible) {
+            film.classList.remove("hidden");
+          } else {
+            film.classList.add("hidden");
+          }
+        });
+        bouton.textContent = "Voir plus";
+      } else {
+        // Cas : Voir plus → afficher tous les films
+        filmsArray.forEach((film) => film.classList.remove("hidden"));
+        bouton.textContent = "Voir moins";
+      }
     });
   });
 }
