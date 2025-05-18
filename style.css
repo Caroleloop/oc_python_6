@@ -103,7 +103,7 @@ h2 {
   font-weight: 200;
   font-size: 28px;
   line-height: 100%;
-  letter-spacing: 0%;
+  letter-spacing: 0;
 }
 
 .bouton-details-meilleur-film {
@@ -418,7 +418,7 @@ h2 {
   }
 
   .bouton-details-meilleur-film {
-    align-self: right;
+    align-self: flex-end;
     margin-top: auto;
   }
   .film-en-vedette img {
